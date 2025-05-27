@@ -1,36 +1,36 @@
 class Api::V1::ConversationsController < Api::V1::BaseController
   def create
     conversation = Conversation.new(conversation_params)
-    
+
     if conversation.save
       render json: {
         conversation: conversation,
-        message: 'Conversation created successfully'
+        message: "Conversation created successfully"
       }, status: :created
     else
       render json: {
         errors: conversation.errors,
-        message: 'Failed to create conversation'
+        message: "Failed to create conversation"
       }, status: :unprocessable_entity
     end
   end
 
   def update
     conversation = Conversation.find(params[:id])
-    
+
     if conversation.update(conversation_update_params)
       render json: {
         conversation: conversation,
-        message: 'Conversation updated successfully'
+        message: "Conversation updated successfully"
       }
     else
       render json: {
         errors: conversation.errors,
-        message: 'Failed to update conversation'
+        message: "Failed to update conversation"
       }, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Conversation not found' }, status: :not_found
+    render json: { error: "Conversation not found" }, status: :not_found
   end
 
   private

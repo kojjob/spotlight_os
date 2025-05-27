@@ -1,36 +1,36 @@
 class Api::V1::LeadsController < Api::V1::BaseController
   def create
     lead = Lead.new(lead_params)
-    
+
     if lead.save
       render json: {
         lead: lead,
-        message: 'Lead created successfully'
+        message: "Lead created successfully"
       }, status: :created
     else
       render json: {
         errors: lead.errors,
-        message: 'Failed to create lead'
+        message: "Failed to create lead"
       }, status: :unprocessable_entity
     end
   end
 
   def update
     lead = Lead.find(params[:id])
-    
+
     if lead.update(lead_update_params)
       render json: {
         lead: lead,
-        message: 'Lead updated successfully'
+        message: "Lead updated successfully"
       }
     else
       render json: {
         errors: lead.errors,
-        message: 'Failed to update lead'
+        message: "Failed to update lead"
       }, status: :unprocessable_entity
     end
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'Lead not found' }, status: :not_found
+    render json: { error: "Lead not found" }, status: :not_found
   end
 
   private

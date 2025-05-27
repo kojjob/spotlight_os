@@ -105,7 +105,7 @@ lead_data.each do |lead_info|
     lead.status = lead_info[:status]
     lead.score = lead_info[:score]
     lead.source = lead_info[:source]
-    lead.qualified = [:qualified, :converted].include?(lead_info[:status])
+    lead.qualified = [ :qualified, :converted ].include?(lead_info[:status])
   end
 end
 
@@ -119,15 +119,15 @@ assistants = Assistant.all
 
 leads.each_with_index do |lead, index|
   assistant = assistants[index % assistants.count]
-  
+
   conversation = Conversation.find_or_create_by!(
     lead: lead,
     assistant: assistant
   ) do |conv|
-    conv.status = [:active, :completed, :paused].sample
+    conv.status = [ :active, :completed, :paused ].sample
     conv.duration = rand(120..1800) # 2-30 minutes
     conv.score = rand(30..95)
-    conv.source = [:phone, :web, :chat].sample
+    conv.source = [ :phone, :web, :chat ].sample
     conv.started_at = rand(7.days).seconds.ago
     conv.ended_at = conv.started_at + conv.duration.seconds if conv.status == "completed"
   end
@@ -148,7 +148,7 @@ leads.each_with_index do |lead, index|
         content: message[:content],
         speaker: message[:role]
       ) do |transcript|
-        transcript.sentiment = ["positive", "neutral", "negative"].sample
+        transcript.sentiment = [ "positive", "neutral", "negative" ].sample
         transcript.confidence = rand(0.85..0.98).round(3)
         transcript.timestamp = conversation.started_at.to_f + (msg_index * 30)
       end
@@ -161,14 +161,14 @@ puts "Created #{Conversation.count} conversations with #{Transcript.count} trans
 # Create sample appointments
 puts "Creating sample appointments..."
 
-qualified_leads = Lead.where(status: [:qualified, :converted])
+qualified_leads = Lead.where(status: [ :qualified, :converted ])
 qualified_leads.each do |lead|
   next if rand > 0.6 # Only create appointments for 60% of qualified leads
 
   Appointment.find_or_create_by!(lead: lead, assistant: lead.assistant) do |appointment|
     appointment.scheduled_at = rand(1..30).days.from_now
-    appointment.duration = [30, 45, 60].sample
-    appointment.status = [:scheduled, :completed, :cancelled].sample
+    appointment.duration = [ 30, 45, 60 ].sample
+    appointment.status = [ :scheduled, :completed, :cancelled ].sample
     appointment.external_link = "https://meet.spotlightos.com/#{SecureRandom.hex(8)}"
     appointment.external_id = "cal_#{SecureRandom.hex(12)}"
     appointment.metadata = {
