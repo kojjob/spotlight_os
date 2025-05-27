@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "/about", to: "pages#about"
   get "/contact", to: "pages#contact"
   post "/contact", to: "pages#create_contact", as: :create_contact
+  get "/demo", to: "pages#demo", as: :demo
 
   # Root route for authenticated users
   root "dashboard#index"

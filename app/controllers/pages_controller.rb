@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:landing, :about, :contact, :create_contact]
+  skip_before_action :authenticate_user!, only: [:landing, :about, :contact, :create_contact, :demo]
   layout 'marketing'
   
   def landing
@@ -12,6 +12,32 @@ class PagesController < ApplicationController
   end
 
   def about
+  end
+  
+  def demo
+    @demo_videos = [
+      {
+        title: "Qualifying Leads with Voice AI",
+        duration: "2:35",
+        thumbnail: "demo_qualify_leads.jpg",
+        description: "See how Spotlight OS qualifies leads through natural conversation",
+        video_id: "spotlight-demo-1"
+      },
+      {
+        title: "Booking Appointments Automatically",
+        duration: "3:10",
+        thumbnail: "demo_booking.jpg",
+        description: "Watch our AI book meetings directly into your sales team's calendar",
+        video_id: "spotlight-demo-2"
+      },
+      {
+        title: "Analytics & Reporting Dashboard",
+        duration: "2:45",
+        thumbnail: "demo_analytics.jpg",
+        description: "Explore the real-time analytics dashboard showing conversion metrics",
+        video_id: "spotlight-demo-3"
+      }
+    ]
   end
 
   def contact
