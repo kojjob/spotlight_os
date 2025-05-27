@@ -26,11 +26,11 @@ class DashboardController < ApplicationController
     start_date = @date_range.to_i.days.ago
 
     @analytics = {
-      total_leads: current_user_leads.where("created_at >= ?", start_date).count,
-      qualified_leads: current_user_leads.qualified.where("created_at >= ?", start_date).count,
+      total_leads: current_user_leads.where("leads.created_at >= ?", start_date).count,
+      qualified_leads: current_user_leads.qualified.where("leads.created_at >= ?", start_date).count,
       conversion_rate: calculate_conversion_rate(start_date),
       avg_lead_score: calculate_avg_lead_score(start_date),
-      total_conversations: current_user.conversations.where("created_at >= ?", start_date).count,
+      total_conversations: current_user.conversations.where("conversations.created_at >= ?", start_date).count,
       avg_conversation_duration: calculate_avg_conversation_duration(start_date),
       assistant_performance: assistant_performance_data(start_date)
     }
@@ -46,13 +46,13 @@ class DashboardController < ApplicationController
   private
 
   def leads_over_time_data(start_date = 30.days.ago)
-    current_user_leads.where("created_at >= ?", start_date)
-                     .group_by_day(:created_at)
+    current_user_leads.where("leads.created_at >= ?", start_date)
+                     .group_by_day("leads.created_at")
                      .count
   end
 
   def conversion_funnel_data(start_date = 30.days.ago)
-    leads = current_user_leads.where("created_at >= ?", start_date)
+    leads = current_user_leads.where("leads.created_at >= ?", start_date)
     {
       "Total Leads" => leads.count,
       "Contacted" => leads.contacted.count,
@@ -73,27 +73,27 @@ class DashboardController < ApplicationController
   end
 
   def source_breakdown_data(start_date = 30.days.ago)
-    current_user_leads.where("created_at >= ?", start_date)
+    current_user_leads.where("leads.created_at >= ?", start_date)
                      .group(:source)
                      .count
   end
 
   def calculate_conversion_rate(start_date)
-    leads = current_user_leads.where("created_at >= ?", start_date)
+    leads = current_user_leads.where("leads.created_at >= ?", start_date)
     return 0 if leads.count.zero?
 
     (leads.converted.count.to_f / leads.count * 100).round(2)
   end
 
   def calculate_avg_lead_score(start_date)
-    current_user_leads.where("created_at >= ?", start_date)
+    current_user_leads.where("leads.created_at >= ?", start_date)
                      .where.not(score: nil)
                      .average(:score)
                      &.round(2) || 0
   end
 
   def calculate_avg_conversation_duration(start_date)
-    duration = current_user.conversations.where("created_at >= ?", start_date)
+    duration = current_user.conversations.where("conversations.created_at >= ?", start_date)
                           .where.not(duration: nil)
                           .average(:duration)
 
@@ -103,8 +103,8 @@ class DashboardController < ApplicationController
 
   def assistant_performance_data(start_date)
     current_user_assistants.includes(:leads, :conversations).map do |assistant|
-      leads = assistant.leads.where("created_at >= ?", start_date)
-      conversations = assistant.conversations.where("created_at >= ?", start_date)
+      leads = assistant.leads.where("leads.created_at >= ?", start_date)
+      conversations = assistant.conversations.where("conversations.created_at >= ?", start_date)
 
       {
         name: assistant.name,

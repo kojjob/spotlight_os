@@ -1,0 +1,71 @@
+Hi <%= @contact_form.first_name %>,
+
+Thank you for contacting Spotlight OS! We've successfully received your message and our team will review it promptly.
+
+MESSAGE DETAILS:
+================
+Name: <%= @contact_form.first_name %> <%= @contact_form.last_name %>
+Email: <%= @contact_form.email %>
+<% if @contact_form.company.present? %>Company: <%= @contact_form.company %><% end %>
+<% if @contact_form.phone.present? %>Phone: <%= @contact_form.phone %><% end %>
+Inquiry Type: <%= case @contact_form.inquiry_type
+                   when 'demo' then '🚀 Request a Demo'
+                   when 'general' then '❓ General Question'
+                   when 'support' then '🔧 Technical Support'
+                   when 'partnership' then '🤝 Partnership Inquiry'
+                   when 'pricing' then '💰 Pricing Information'
+                   else @contact_form.inquiry_type.humanize
+                   end %>
+Priority: <%= case @contact_form.inquiry_type
+              when 'demo', 'partnership' then 'HIGH PRIORITY'
+              when 'pricing', 'support' then 'MEDIUM PRIORITY'
+              else 'NORMAL PRIORITY'
+              end %>
+<% if @contact_form.message.present? %>
+Message: 
+<%= @contact_form.message %>
+<% end %>
+
+WHAT HAPPENS NEXT:
+==================
+✓ Response Time: We'll respond within 1 business hour during office hours
+<% if @contact_form.inquiry_type == 'demo' %>
+✓ Demo Scheduling: Our sales team will contact you to schedule a personalized demo
+✓ Custom Setup: We'll prepare a demo environment tailored to your business needs
+<% elsif @contact_form.inquiry_type == 'support' %>
+✓ Technical Review: Our support team will analyze your request
+✓ Solution Provided: We'll provide step-by-step resolution guidance
+<% elsif @contact_form.inquiry_type == 'partnership' %>
+✓ Partnership Review: Our business development team will evaluate the opportunity
+✓ Follow-up Meeting: We'll schedule a call to discuss partnership details
+<% else %>
+✓ Expert Review: A specialist will review your inquiry
+✓ Detailed Response: You'll receive a comprehensive answer to your questions
+<% end %>
+✓ Reference Number: <%= Time.current.strftime('%Y%m%d') %>-<%= @contact_form.email.split('@').first %>-<%= rand(1000..9999) %>
+
+NEED IMMEDIATE ASSISTANCE?
+==========================
+Our AI assistants are available 24/7 for common questions and quick support.
+
+📞 Phone: +1 (800) 776-8564
+✉️  Email: support@spotlightos.com
+🌐 Website: <%= ENV.fetch('APP_URL', 'https://spotlightos.com') %>
+
+Thank you for choosing Spotlight OS!
+
+Best regards,
+The Spotlight OS Team
+
+---
+Spotlight OS
+123 Innovation Drive
+San Francisco, CA 94105
+Phone: +1 (800) 776-8564
+Email: hello@spotlightos.com
+
+© <%= Date.current.year %> Spotlight OS. All rights reserved.
+Transforming sales conversations with AI-powered voice technology.
+
+This email was sent because you contacted us through our website.
+If you believe this was sent in error, please contact us at hello@spotlightos.com

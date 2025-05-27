@@ -145,6 +145,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.6.0)
+      activesupport (>= 7.1)
     haml (6.3.0)
       temple (>= 0.8.2)
       thor
@@ -481,6 +483,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   faraday
+  groupdate
   httparty
   importmap-rails
   jbuilder

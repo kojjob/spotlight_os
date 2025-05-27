@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Contact Form Inquiry - Spotlight OS</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f8fafc;
+    }
+    .header {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      padding: 30px;
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+    }
+    .content {
+      background: white;
+      padding: 30px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .field-group {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8fafc;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+    .field-label {
+      font-weight: bold;
+      color: #374151;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .field-value {
+      color: #6b7280;
+    }
+    .message-content {
+      background-color: #f0f9ff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e0f2fe;
+      margin-top: 15px;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .priority {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .priority.demo { background-color: #fef3c7; color: #92400e; }
+    .priority.support { background-color: #fee2e2; color: #991b1b; }
+    .priority.partnership { background-color: #f3e8ff; color: #7c3aed; }
+    .priority.pricing { background-color: #d1fae5; color: #065f46; }
+    .priority.general { background-color: #e5e7eb; color: #374151; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎯 New Contact Form Inquiry</h1>
+    <p>Someone is interested in Spotlight OS!</p>
+  </div>
+  
+  <div class="content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+      <h2 style="margin: 0; color: #1f2937;"><%= @subject %></h2>
+      <span class="priority <%= @inquiry_type %>"><%= @inquiry_type.titleize %></span>
+    </div>
+    
+    <div class="field-group">
+      <span class="field-label">👤 Contact Information</span>
+      <div class="field-value">
+        <strong><%= @name %></strong><br>
+        📧 <a href="mailto:<%= @email %>"><%= @email %></a><br>
+        <% if @company.present? %>🏢 <%= @company %><br><% end %>
+        <% if @phone.present? %>📞 <a href="tel:<%= @phone %>"><%= @phone %></a><% end %>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <span class="field-label">💬 Message</span>
+      <div class="message-content">
+        <%= simple_format(@message) %>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <span class="field-label">⏰ Submitted</span>
+      <div class="field-value">
+        <%= Time.current.strftime("%B %d, %Y at %I:%M %p %Z") %>
+      </div>
+    </div>
+
+    <% if @inquiry_type == 'demo' %>
+      <div style="background: linear-gradient(135deg, #fef3c7, #fed7aa); padding: 20px; border-radius: 8px; margin-top: 20px;">
+        <h3 style="margin-top: 0; color: #92400e;">🚀 Demo Request Priority</h3>
+        <p style="margin-bottom: 0; color: #92400e;">This is a demo request! Consider prioritizing this lead for quick follow-up.</p>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="footer">
+    <p>This email was sent from the Spotlight OS contact form.<br>
+    Reply directly to this email to respond to <%= @name %>.</p>
+  </div>
+</body>
+</html>

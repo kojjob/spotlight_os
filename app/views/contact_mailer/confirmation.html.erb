@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You for Contacting Spotlight OS</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #f8fafc;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+    .logo {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .logo svg {
+      width: 30px;
+      height: 30px;
+      color: #3b82f6;
+    }
+    .content {
+      padding: 40px 30px;
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+    .success-icon svg {
+      width: 40px;
+      height: 40px;
+      color: white;
+    }
+    h1 {
+      color: white;
+      font-size: 28px;
+      margin: 0;
+      font-weight: 700;
+    }
+    h2 {
+      color: #1f2937;
+      font-size: 24px;
+      margin: 0 0 20px 0;
+      text-align: center;
+      font-weight: 600;
+    }
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      margin: 8px 0 0 0;
+    }
+    .message-summary {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 30px 0;
+      border-left: 4px solid #3b82f6;
+    }
+    .message-summary h3 {
+      color: #1f2937;
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .summary-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .summary-label {
+      font-weight: 600;
+      color: #4b5563;
+      flex: 0 0 120px;
+    }
+    .summary-value {
+      color: #1f2937;
+      flex: 1;
+    }
+    .next-steps {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 30px 0;
+      border: 1px solid #bfdbfe;
+    }
+    .next-steps h3 {
+      color: #1e40af;
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+    .next-steps h3 svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+    .next-steps ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #1e40af;
+    }
+    .next-steps li {
+      margin-bottom: 8px;
+    }
+    .cta-section {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+    }
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+    .support-info {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 30px 0;
+      text-align: center;
+      border: 1px solid #e5e7eb;
+    }
+    .support-info h4 {
+      color: #374151;
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .support-info p {
+      color: #6b7280;
+      margin: 0 0 15px 0;
+      font-size: 14px;
+    }
+    .contact-links a {
+      color: #3b82f6;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+    }
+    .footer {
+      background: #f9fafb;
+      padding: 30px;
+      text-align: center;
+      border-top: 1px solid #e5e7eb;
+    }
+    .footer p {
+      color: #6b7280;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    .social-links {
+      margin: 20px 0;
+    }
+    .social-links a {
+      display: inline-block;
+      margin: 0 10px;
+      color: #6b7280;
+      text-decoration: none;
+    }
+    .priority-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .priority-high {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      color: white;
+    }
+    .priority-medium {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      color: white;
+    }
+    .priority-normal {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: white;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .header, .content {
+        padding: 20px;
+      }
+      .message-summary, .next-steps {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .summary-item {
+        flex-direction: column;
+      }
+      .summary-label {
+        flex: none;
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L3.09 8.26L4 9L12 4L20 9L20.91 8.26L12 2Z"/>
+            <path d="M21 16V10.5L12 5.5L3 10.5V16L12 21L21 16Z"/>
+            <path d="M12 7.5L8.5 9.5V13.5L12 15.5L15.5 13.5V9.5L12 7.5Z"/>
+          </svg>
+        </div>
+        <h1>Thank You for Reaching Out!</h1>
+        <p class="subtitle">We've received your message and will respond shortly</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="success-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+
+      <h2>Message Received Successfully</h2>
+      
+      <p>Hi <strong><%= @contact_form.first_name %></strong>,</p>
+      
+      <p>Thank you for contacting Spotlight OS! We've successfully received your message and our team will review it promptly. Here's a summary of what you submitted:</p>
+
+      <div class="message-summary">
+        <h3>Your Message Details</h3>
+        <div class="summary-item">
+          <span class="summary-label">Name:</span>
+          <span class="summary-value"><%= @contact_form.first_name %> <%= @contact_form.last_name %></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Email:</span>
+          <span class="summary-value"><%= @contact_form.email %></span>
+        </div>
+        <% if @contact_form.company.present? %>
+        <div class="summary-item">
+          <span class="summary-label">Company:</span>
+          <span class="summary-value"><%= @contact_form.company %></span>
+        </div>
+        <% end %>
+        <% if @contact_form.phone.present? %>
+        <div class="summary-item">
+          <span class="summary-label">Phone:</span>
+          <span class="summary-value"><%= @contact_form.phone %></span>
+        </div>
+        <% end %>
+        <div class="summary-item">
+          <span class="summary-label">Inquiry Type:</span>
+          <span class="summary-value">
+            <%= case @contact_form.inquiry_type
+                when 'demo' then '🚀 Request a Demo'
+                when 'general' then '❓ General Question'
+                when 'support' then '🔧 Technical Support'
+                when 'partnership' then '🤝 Partnership Inquiry'
+                when 'pricing' then '💰 Pricing Information'
+                else @contact_form.inquiry_type.humanize
+                end %>
+            <span class="priority-badge <%= case @contact_form.inquiry_type
+                                            when 'demo', 'partnership' then 'priority-high'
+                                            when 'pricing', 'support' then 'priority-medium'
+                                            else 'priority-normal'
+                                            end %>">
+              <%= case @contact_form.inquiry_type
+                  when 'demo', 'partnership' then 'High Priority'
+                  when 'pricing', 'support' then 'Medium Priority'
+                  else 'Normal Priority'
+                  end %>
+            </span>
+          </span>
+        </div>
+        <% if @contact_form.message.present? %>
+        <div class="summary-item">
+          <span class="summary-label">Message:</span>
+          <span class="summary-value"><%= simple_format(@contact_form.message) %></span>
+        </div>
+        <% end %>
+      </div>
+
+      <div class="next-steps">
+        <h3>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+          What Happens Next?
+        </h3>
+        <ul>
+          <li><strong>Response Time:</strong> We'll respond within 1 business hour during office hours</li>
+          <% if @contact_form.inquiry_type == 'demo' %>
+          <li><strong>Demo Scheduling:</strong> Our sales team will contact you to schedule a personalized demo</li>
+          <li><strong>Custom Setup:</strong> We'll prepare a demo environment tailored to your business needs</li>
+          <% elsif @contact_form.inquiry_type == 'support' %>
+          <li><strong>Technical Review:</strong> Our support team will analyze your request</li>
+          <li><strong>Solution Provided:</strong> We'll provide step-by-step resolution guidance</li>
+          <% elsif @contact_form.inquiry_type == 'partnership' %>
+          <li><strong>Partnership Review:</strong> Our business development team will evaluate the opportunity</li>
+          <li><strong>Follow-up Meeting:</strong> We'll schedule a call to discuss partnership details</li>
+          <% else %>
+          <li><strong>Expert Review:</strong> A specialist will review your inquiry</li>
+          <li><strong>Detailed Response:</strong> You'll receive a comprehensive answer to your questions</li>
+          <% end %>
+          <li><strong>Reference Number:</strong> Save this email for your records (ID: <%= Time.current.strftime('%Y%m%d') %>-<%= @contact_form.email.split('@').first %>-<%= rand(1000..9999) %>)</li>
+        </ul>
+      </div>
+
+      <div class="cta-section">
+        <% if @contact_form.inquiry_type == 'demo' %>
+        <a href="https://calendly.com/spotlightos-demo" class="cta-button">
+          Schedule Your Demo Now
+        </a>
+        <% else %>
+        <a href="<%= ENV.fetch('APP_URL', 'https://spotlightos.com') %>/about" class="cta-button">
+          Learn More About Spotlight OS
+        </a>
+        <% end %>
+      </div>
+
+      <div class="support-info">
+        <h4>Need Immediate Assistance?</h4>
+        <p>Our AI assistants are available 24/7 for common questions and quick support.</p>
+        <div class="contact-links">
+          <a href="tel:+1-800-SPOTLIGHT">📞 Call Us</a>
+          <a href="mailto:support@spotlightos.com">✉️ Email Support</a>
+          <a href="<%= ENV.fetch('APP_URL', 'https://spotlightos.com') %>/help">❓ Help Center</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p><strong>Spotlight OS</strong></p>
+      <p>123 Innovation Drive, San Francisco, CA 94105</p>
+      <p>Phone: +1 (800) 776-8564 | Email: hello@spotlightos.com</p>
+      
+      <div class="social-links">
+        <a href="#">LinkedIn</a> •
+        <a href="#">Twitter</a> •
+        <a href="#">Facebook</a> •
+        <a href="#">YouTube</a>
+      </div>
+      
+      <p style="margin-top: 20px; font-size: 12px;">
+        This email was sent because you contacted us through our website.<br>
+        If you believe this was sent in error, please contact us at hello@spotlightos.com
+      </p>
+      
+      <p style="font-size: 12px; color: #9ca3af;">
+        © <%= Date.current.year %> Spotlight OS. All rights reserved.<br>
+        Transforming sales conversations with AI-powered voice technology.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

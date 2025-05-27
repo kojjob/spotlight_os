@@ -42,7 +42,7 @@ class Lead < ApplicationRecord
   scope :by_source, ->(source) { where(source: source) }
   scope :by_status, ->(status) { where(status: status) }
   scope :high_score, -> { where("score >= ?", 70) }
-  scope :recent, -> { where("created_at >= ?", 30.days.ago) }
+  scope :recent, -> { where("leads.created_at >= ?", 30.days.ago) }
 
   # Callbacks
   before_save :update_qualified_status

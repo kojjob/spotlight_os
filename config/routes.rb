@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Root route
+  # Marketing pages (public)
+  get "/", to: "pages#landing", as: :landing
+  get "/about", to: "pages#about"
+  get "/contact", to: "pages#contact"
+  post "/contact", to: "pages#create_contact", as: :create_contact
+  get "/demo", to: "pages#demo", as: :demo
+
+  # Root route for authenticated users
   root "dashboard#index"
 
   # Authentication
