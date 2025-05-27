@@ -1,0 +1,307 @@
+<% content_for :title, "Spotlight OS - Voice AI Sales Platform" %>
+<% content_for :description, "Transform your sales process with AI-powered voice assistants that qualify leads, book appointments, and engage customers 24/7." %>
+
+<!-- Hero Section -->
+<section class="pt-20 pb-16 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+        Transform Sales with 
+        <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Voice AI
+        </span>
+      </h1>
+      <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+        Deploy AI-powered voice assistants that qualify leads, book appointments, and engage customers 24/7. 
+        Increase conversions while reducing costs.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <%= link_to new_user_registration_path, class: "bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg" do %>
+          Start Free Trial
+        <% end %>
+        <%= link_to "#demo", class: "border border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors" do %>
+          Watch Demo
+        <% end %>
+      </div>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-blue-600"><%= number_with_delimiter(@stats[:total_conversations]) %>+</div>
+          <div class="text-gray-600">Conversations</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-green-600"><%= number_with_delimiter(@stats[:leads_qualified]) %>+</div>
+          <div class="text-gray-600">Leads Qualified</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-purple-600"><%= @stats[:conversion_rate] %>%</div>
+          <div class="text-gray-600">Conversion Rate</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-orange-600"><%= @stats[:avg_response_time] %>s</div>
+          <div class="text-gray-600">Avg Response</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        Powerful Features for Modern Sales Teams
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Everything you need to automate and optimize your sales process with AI-powered voice technology.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">AI Voice Assistants</h3>
+        <p class="text-gray-600">
+          Deploy natural-sounding AI assistants that can handle complex conversations, qualify leads, and book appointments automatically.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Real-time Analytics</h3>
+        <p class="text-gray-600">
+          Track performance, conversion rates, and customer insights with comprehensive analytics and reporting dashboard.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Instant Integration</h3>
+        <p class="text-gray-600">
+          Connect with your existing CRM, calendar, and communication tools. Setup takes minutes, not weeks.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">24/7 Availability</h3>
+        <p class="text-gray-600">
+          Never miss a lead again. Your AI assistants work around the clock to capture and qualify potential customers.
+        </p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="bg-gradient-to-br from-pink-50 to-pink-100 p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Multi-Channel Support</h3>
+        <p class="text-gray-600">
+          Engage customers across phone calls, web chat, and messaging platforms with consistent AI-powered experiences.
+        </p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-8 rounded-2xl">
+        <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Smart Lead Scoring</h3>
+        <p class="text-gray-600">
+          Automatically score and prioritize leads based on conversation analysis and behavioral patterns.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        Simple, Transparent Pricing
+      </h2>
+      <p class="text-xl text-gray-600">
+        Choose the plan that fits your business needs. All plans include a 14-day free trial.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Starter Plan -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+          <div class="text-4xl font-bold text-blue-600 mb-4">$99<span class="text-lg text-gray-600">/month</span></div>
+          <p class="text-gray-600 mb-6">Perfect for small businesses</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            1 AI Assistant
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            500 conversations/month
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Basic analytics
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Email support
+          </li>
+        </ul>
+        <%= link_to new_user_registration_path, class: "w-full bg-gray-200 text-gray-900 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors block text-center" do %>
+          Start Free Trial
+        <% end %>
+      </div>
+
+      <!-- Professional Plan -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-blue-600 relative">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+        </div>
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+          <div class="text-4xl font-bold text-blue-600 mb-4">$299<span class="text-lg text-gray-600">/month</span></div>
+          <p class="text-gray-600 mb-6">For growing sales teams</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            5 AI Assistants
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            2,500 conversations/month
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Advanced analytics
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            CRM integrations
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Priority support
+          </li>
+        </ul>
+        <%= link_to new_user_registration_path, class: "w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors block text-center" do %>
+          Start Free Trial
+        <% end %>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+          <div class="text-4xl font-bold text-blue-600 mb-4">$999<span class="text-lg text-gray-600">/month</span></div>
+          <p class="text-gray-600 mb-6">For large organizations</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Unlimited assistants
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Unlimited conversations
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Custom analytics
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Advanced integrations
+          </li>
+          <li class="flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Dedicated support
+          </li>
+        </ul>
+        <%= link_to contact_path, class: "w-full bg-gray-200 text-gray-900 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors block text-center" do %>
+          Contact Sales
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-blue-600 to-purple-600">
+  <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
+      Ready to Transform Your Sales Process?
+    </h2>
+    <p class="text-xl text-blue-100 mb-8">
+      Join thousands of businesses already using Spotlight OS to increase conversions and reduce costs.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to new_user_registration_path, class: "bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg" do %>
+        Start Your Free Trial
+      <% end %>
+      <%= link_to contact_path, class: "border border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors" do %>
+        Schedule Demo
+      <% end %>
+    </div>
+  </div>
+</section>
