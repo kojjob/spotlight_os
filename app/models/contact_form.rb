@@ -23,18 +23,18 @@ class ContactForm
 
   def subject
     case inquiry_type
-    when "demo"
-      "Demo Request"
-    when "general"
-      "General Inquiry"
-    when "support"
-      "Technical Support"
-    when "partnership"
-      "Partnership Inquiry"
-    when "pricing"
-      "Pricing Information"
+    when 'demo'
+      'Demo Request'
+    when 'general'
+      'General Inquiry'
+    when 'support'
+      'Technical Support'
+    when 'partnership'
+      'Partnership Inquiry'
+    when 'pricing'
+      'Pricing Information'
     else
-      "Contact Form Submission"
+      'Contact Form Submission'
     end
   end
 end

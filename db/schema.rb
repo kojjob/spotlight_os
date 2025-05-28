@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_27_230720) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_123456) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -63,6 +63,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_230720) do
     t.index ["created_at", "status"], name: "index_conversations_on_created_at_and_status"
     t.index ["lead_id"], name: "index_conversations_on_lead_id"
     t.index ["score"], name: "index_conversations_on_score"
+  end
+
+  create_table "deal_rooms", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "stage", default: 0, null: false
+    t.bigint "lead_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_id"], name: "index_deal_rooms_on_lead_id"
+    t.index ["user_id"], name: "index_deal_rooms_on_user_id"
   end
 
   create_table "leads", force: :cascade do |t|
@@ -138,6 +149,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_230720) do
   add_foreign_key "assistants", "users"
   add_foreign_key "conversations", "assistants"
   add_foreign_key "conversations", "leads"
+  add_foreign_key "deal_rooms", "leads"
+  add_foreign_key "deal_rooms", "users"
   add_foreign_key "leads", "assistants"
   add_foreign_key "transcripts", "conversations"
 end

@@ -1,0 +1,35 @@
+<div class="deal-room-container bg-white rounded-lg shadow-md p-6 mb-6">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-xl font-semibold text-gray-800">
+      <%= deal_room.name %>
+      <span class="ml-2 px-2 py-1 text-xs rounded-full <%= deal_room_stage_badge_class(deal_room.stage) %>">
+        <%= deal_room.stage.humanize %>
+      </span>
+    </h3>
+    
+    <div class="flex space-x-2">
+      <%= link_to 'View Details', '#', class: 'btn btn-primary', data: { turbo_frame: 'deal_room_details' } %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-4 mb-4">
+    <div class="bg-gray-50 p-3 rounded">
+      <p class="text-sm text-gray-500 mb-1">Lead</p>
+      <p class="font-medium"><%= deal_room.lead.name %></p>
+    </div>
+    
+    <div class="bg-gray-50 p-3 rounded">
+      <p class="text-sm text-gray-500 mb-1">Last Activity</p>
+      <p class="font-medium"><%= time_ago_in_words(deal_room.updated_at) %> ago</p>
+    </div>
+    
+    <div class="bg-gray-50 p-3 rounded">
+      <p class="text-sm text-gray-500 mb-1">Value</p>
+      <p class="font-medium"><%= number_to_currency(deal_room.lead.estimated_value) %></p>
+    </div>
+  </div>
+
+  <turbo-frame id="deal_room_details">
+    <!-- Details will be loaded here when View Details is clicked -->
+  </turbo-frame>
+</div>
