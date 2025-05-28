@@ -48,7 +48,7 @@ class DashboardController < ApplicationController
 
   def leads_over_time_data(start_date = 30.days.ago)
     current_user_leads.where("leads.created_at >= ?", start_date)
-                     .group_by_day("leads.created_at")
+                     .group("DATE(leads.created_at)")
                      .count
   end
 

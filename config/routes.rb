@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     sessions: "users/sessions"
   }
 
+  # Deal rooms
+  resources :deal_rooms, only: [:index, :show, :create, :update, :destroy]
+  get "/ai-deal-room", to: "deal_rooms#index"
+  get "/ai-deal-room/:id", to: "deal_rooms#show"
+
   # Main application routes
   resources :assistants do
     member do
@@ -49,7 +54,7 @@ Rails.application.routes.draw do
   end
 
   # Dashboard and analytics
-  get "/dashboard", to: "dashboard#index"
+  get "/dashboard", to: "dashboard#index", as: :dashboard_index
   get "/dashboard/analytics", to: "dashboard#analytics", as: :dashboard_analytics
   get "/analytics", to: "dashboard#analytics"
 

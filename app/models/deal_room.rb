@@ -3,7 +3,7 @@ class DealRoom < ApplicationRecord
   belongs_to :user
   has_many :conversations, through: :lead
 
-  enum stage: { initial_contact: 0, needs_analysis: 1, proposal: 2, negotiation: 3, closed_won: 4, closed_lost: 5 }
+  enum :stage, { initial_contact: 0, needs_analysis: 1, proposal: 2, negotiation: 3, closed_won: 4, closed_lost: 5 }
 
   def timeline_events
     events = conversations.flat_map do |c|

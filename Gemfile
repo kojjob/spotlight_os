@@ -33,6 +33,9 @@ gem "redis", ">= 4.0"
 # JSON handling
 gem "oj"
 
+# Date/time grouping for analytics
+gem "groupdate"
+
 # Authorization
 gem "cancancan"
 
