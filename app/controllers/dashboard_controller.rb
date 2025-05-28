@@ -5,12 +5,12 @@ class DashboardController < ApplicationController
       active_assistants: current_user_assistants.active.count,
       total_leads: current_user_leads.count,
       qualified_leads: current_user_leads.qualified.count,
-      active_conversations: current_user.conversations.active.count,
+      active_conversations: current_user_conversations.active.count, # Changed here
       recent_appointments: current_user.appointments.where("scheduled_at >= ?", Date.current).count
     }
 
     @recent_leads = current_user_leads.recent.limit(5)
-    @active_conversations = current_user.conversations.active.includes(:lead, :assistant).limit(5)
+    @active_conversations = current_user_conversations.active.includes(:lead, :assistant).limit(5) # Changed here
     @upcoming_appointments = current_user.appointments
                                         .where("scheduled_at >= ?", Time.current)
                                         .order(:scheduled_at)
@@ -30,7 +30,7 @@ class DashboardController < ApplicationController
       qualified_leads: current_user_leads.qualified.where("leads.created_at >= ?", start_date).count,
       conversion_rate: calculate_conversion_rate(start_date),
       avg_lead_score: calculate_avg_lead_score(start_date),
-      total_conversations: current_user.conversations.where("conversations.created_at >= ?", start_date).count,
+      total_conversations: current_user_conversations.where("conversations.created_at >= ?", start_date).count, # Changed here
       avg_conversation_duration: calculate_avg_conversation_duration(start_date),
       assistant_performance: assistant_performance_data(start_date)
     }
@@ -62,8 +62,10 @@ class DashboardController < ApplicationController
   end
 
   def sentiment_distribution_data(start_date = 30.days.ago)
-    transcripts = current_user.transcripts.joins(:conversation)
-                             .where("conversations.created_at >= ?", start_date)
+    # Correctly fetch transcripts through assistants and then conversations
+    transcripts = Transcript.joins(conversation: :assistant)
+                            .where(assistants: { user_id: current_user.id })
+                            .where("conversations.created_at >= ?", start_date)
 
     {
       "Positive" => transcripts.where(sentiment: "positive").count,
@@ -93,7 +95,7 @@ class DashboardController < ApplicationController
   end
 
   def calculate_avg_conversation_duration(start_date)
-    duration = current_user.conversations.where("conversations.created_at >= ?", start_date)
+    duration = current_user_conversations.where("conversations.created_at >= ?", start_date) # Changed here
                           .where.not(duration: nil)
                           .average(:duration)
 
@@ -115,5 +117,20 @@ class DashboardController < ApplicationController
         avg_conversation_duration: conversations.where.not(duration: nil).average(:duration)&./(60)&.round(2) || 0
       }
     end
+  end
+
+  # Helper method to get conversations for the current user through assistants
+  def current_user_conversations
+    Conversation.joins(:assistant).where(assistants: { user_id: current_user.id })
+  end
+
+  # Helper method to get leads for the current user through assistants
+  def current_user_leads
+    Lead.joins(:assistant).where(assistants: { user_id: current_user.id })
+  end
+
+  # Helper method to get assistants for the current user
+  def current_user_assistants
+    current_user.assistants
   end
 end
