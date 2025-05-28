@@ -1,0 +1,108 @@
+<% content_for(:title, "Set New Password - Spotlight OS") %>
+
+<!-- Header -->
+<div class="text-center mb-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-2">Set New Password</h1>
+  <p class="text-gray-600">Choose a strong password for your account</p>
+</div>
+
+<!-- Password Reset Form -->
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
+  <%= f.hidden_field :reset_password_token %>
+  
+  <!-- Error Messages -->
+  <% if resource.errors.any? %>
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(resource.errors.count, "error") %> occurred:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc pl-5 space-y-1">
+              <% resource.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- New Password Field -->
+  <div>
+    <%= f.label :password, "New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <% if @minimum_password_length %>
+      <p class="text-xs text-gray-500 mb-2">Minimum <%= @minimum_password_length %> characters</p>
+    <% end %>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      </div>
+      <%= f.password_field :password, 
+          autofocus: true, 
+          autocomplete: "new-password",
+          placeholder: "Enter your new password",
+          class: "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400 bg-white" %>
+    </div>
+  </div>
+
+  <!-- Confirm New Password Field -->
+  <div>
+    <%= f.label :password_confirmation, "Confirm New Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <%= f.password_field :password_confirmation, 
+          autocomplete: "new-password",
+          placeholder: "Confirm your new password",
+          class: "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400 bg-white" %>
+    </div>
+  </div>
+
+  <!-- Password Strength Indicator -->
+  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+    <h4 class="text-sm font-medium text-gray-900 mb-2">Password Requirements:</h4>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-600">
+      <div class="flex items-center">
+        <span class="w-2 h-2 bg-gray-300 rounded-full mr-2"></span>
+        At least 8 characters
+      </div>
+      <div class="flex items-center">
+        <span class="w-2 h-2 bg-gray-300 rounded-full mr-2"></span>
+        Include numbers
+      </div>
+      <div class="flex items-center">
+        <span class="w-2 h-2 bg-gray-300 rounded-full mr-2"></span>
+        Include lowercase letters
+      </div>
+      <div class="flex items-center">
+        <span class="w-2 h-2 bg-gray-300 rounded-full mr-2"></span>
+        Include uppercase letters
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div>
+    <%= f.submit "Update Password", 
+        class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]" %>
+  </div>
+
+  <!-- Back to Sign In -->
+  <div class="text-center">
+    <%= link_to "← Back to Sign In", new_session_path(resource_name), 
+        class: "inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200" %>
+  </div>
+<% end %>
