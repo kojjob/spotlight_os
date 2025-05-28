@@ -1,23 +1,14 @@
 Rails.application.routes.draw do
-  # Onboarding routes
-  get "onboarding", to: "onboarding#index"
-  get "onboarding/:step", to: "onboarding#show", as: :onboarding_step
-  patch "onboarding/:step", to: "onboarding#update"
-  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Marketing pages (public)
-  get "/", to: "pages#landing", as: :landing
-  get "/about", to: "pages#about"
-  get "/contact", to: "pages#contact"
-  post "/contact", to: "pages#create_contact", as: :create_contact
-  get "/demo", to: "pages#demo", as: :demo
-
-  # Root route for authenticated users
+  # Root route
   root "dashboard#index"
 
   # Authentication
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    sessions: "users/sessions"
+  }
 
   # Main application routes
   resources :assistants do
@@ -56,6 +47,7 @@ Rails.application.routes.draw do
 
   # Dashboard and analytics
   get "/dashboard", to: "dashboard#index"
+  get "/dashboard/analytics", to: "dashboard#analytics", as: :dashboard_analytics
   get "/analytics", to: "dashboard#analytics"
 
   # API routes for external integrations

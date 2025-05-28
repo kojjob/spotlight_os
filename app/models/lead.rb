@@ -11,8 +11,8 @@ class Lead < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone, presence: true, format: { with: /\A[\+]?[1-9][\d\s\-\(\)]{7,15}\z/ }
-  validates :status, inclusion: { in: %w[fresh contacted qualified unqualified converted lost nurturing] }
-  validates :source, inclusion: { in: %w[website phone social_media email referral paid_ads cold_email] }
+  validates :status, inclusion: { in: %w[fresh contacted qualified unqualified converted lost] }
+  validates :source, inclusion: { in: %w[website phone social email referral advertisement] }
   validates :score, numericality: { in: 0..100, allow_nil: true }
 
   # Enums
@@ -22,22 +22,21 @@ class Lead < ApplicationRecord
     qualified: "qualified",
     unqualified: "unqualified",
     converted: "converted",
-    lost: "lost",
-    nurturing: "nurturing"
+    lost: "lost"
   }
 
   enum :source, {
     website: "website",
     phone: "phone",
-    social_media: "social_media",
+    social: "social",
     email: "email",
     referral: "referral",
-    paid_ads: "paid_ads",
-    cold_email: "cold_email"
+    advertisement: "advertisement"
   }
 
   # Scopes
   scope :qualified, -> { where(qualified: true) }
+
   scope :unqualified, -> { where(qualified: false) }
   scope :by_source, ->(source) { where(source: source) }
   scope :by_status, ->(status) { where(status: status) }
