@@ -1,16 +1,13 @@
 Rails.application.routes.draw do
-  namespace :api do
-    resources :deal_rooms, only: [:index, :show, :create, :update, :destroy]
-  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
+  
   # Root route
-  root "dashboard#index"
-
+  root 'dashboard#index'
+  
   # Authentication
   devise_for :users, controllers: {
-    registrations: "users/registrations",
-    sessions: "users/sessions"
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
 
   # Main application routes
@@ -19,27 +16,27 @@ Rails.application.routes.draw do
       patch :toggle_active
       get :analytics
     end
-
-    resources :leads, except: [ :destroy ] do
-      resources :conversations, only: [ :show, :create ]
+    
+    resources :leads, except: [:destroy] do
+      resources :conversations, only: [:show, :create]
     end
   end
-
+  
   resources :leads do
     member do
       patch :update_status
       get :call_history
     end
   end
-
+  
   resources :conversations do
-    resources :transcripts, only: [ :index, :show ]
+    resources :transcripts, only: [:index, :show]
     member do
       get :analytics
       patch :update_score
     end
   end
-
+  
   resources :appointments do
     member do
       patch :confirm
@@ -47,18 +44,17 @@ Rails.application.routes.draw do
       patch :cancel
     end
   end
-
+  
   # Dashboard and analytics
-  get "/dashboard", to: "dashboard#index"
-  get "/dashboard/analytics", to: "dashboard#analytics", as: :dashboard_analytics
-  get "/analytics", to: "dashboard#analytics"
-
+  get '/dashboard', to: 'dashboard#index'
+  get '/analytics', to: 'dashboard#analytics'
+  
   # API routes for external integrations
   namespace :api do
     namespace :v1 do
-      resources :webhooks, only: [ :create ]
-      resources :conversations, only: [ :create, :update ]
-      resources :leads, only: [ :create, :update ]
+      resources :webhooks, only: [:create]
+      resources :conversations, only: [:create, :update]
+      resources :leads, only: [:create, :update]
     end
   end
 
@@ -71,5 +67,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Health check for monitoring
-  get "/health", to: "health#check"
+  get '/health', to: 'health#check'
 end

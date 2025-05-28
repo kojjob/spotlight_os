@@ -31,7 +31,7 @@ class Conversation < ApplicationRecord
   # Scopes
   scope :active, -> { where(status: "active") }
   scope :completed, -> { where(status: "completed") }
-  scope :recent, -> { where("created_at >= ?", 24.hours.ago) }
+  scope :recent, -> { where("conversations.created_at >= ?", 24.hours.ago) }
   scope :by_source, ->(source) { where(source: source) }
   scope :high_score, -> { where("score >= ?", 70) }
 

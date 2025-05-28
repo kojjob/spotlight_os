@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
-  def index
+    def index
+     @deal_rooms = current_user.deal_rooms.includes(:lead, :conversations).order(created_at: :desc)
     @stats = {
       total_assistants: current_user_assistants.count,
       active_assistants: current_user_assistants.active.count,

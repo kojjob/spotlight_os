@@ -1,5 +1,6 @@
 <%= content_for :title, "Dashboard" %>
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+  <%= render partial: 'dashboard/deal_room', collection: @deal_rooms, as: :deal_room %>
   <%# Header Section %>
   <div class="bg-white shadow-lg shadow-slate-200/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
