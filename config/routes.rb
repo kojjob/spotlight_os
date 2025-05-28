@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  # Onboarding routes
+  get "onboarding", to: "onboarding#index"
+  get "onboarding/:step", to: "onboarding#show", as: :onboarding_step
+  patch "onboarding/:step", to: "onboarding#update"
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Marketing pages (public)

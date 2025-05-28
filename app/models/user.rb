@@ -16,6 +16,9 @@ class User < ApplicationRecord
   validates :role, inclusion: { in: %w[owner admin sales_manager user] }
   validates :plan, inclusion: { in: %w[trial starter professional enterprise] }
 
+  # Callbacks
+  before_validation :set_default_plan, on: :create
+
   # Enums
   enum :role, { owner: "owner", admin: "admin", sales_manager: "sales_manager", user: "user" }
   enum :plan, { trial: "trial", starter: "starter", professional: "professional", enterprise: "enterprise" }
@@ -40,5 +43,17 @@ class User < ApplicationRecord
   def conversion_rate
     return 0 if total_leads.zero?
     (qualified_leads.to_f / total_leads * 100).round(2)
+  end
+
+  def onboarding_completed?
+    onboarding_completed == true
+  end
+
+  private
+
+  def set_default_plan
+    self.plan ||= 'trial'
+    self.onboarding_step ||= 0  # 0 = welcome step
+    self.onboarding_completed ||= false
   end
 end
