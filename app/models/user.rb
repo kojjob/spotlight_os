@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :leads, through: :assistants
   has_many :conversations, through: :assistants
   has_many :appointments, through: :assistants
+  has_many :transcripts, through: :assistants
 
   # Validations
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
