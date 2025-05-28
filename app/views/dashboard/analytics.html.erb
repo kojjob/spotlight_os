@@ -1,4 +1,400 @@
-<div>
-  <h1 class="font-bold text-4xl">Dashboard#analytics</h1>
-  <p>Find me in app/views/dashboard/analytics.html.erb</p>
+<%# Analytics Dashboard - Comprehensive AI Sales Analytics %>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+  <%# Header Section %>
+  <div class="bg-white shadow-lg shadow-slate-200/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-6">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-2xl font-bold text-slate-900">Analytics Dashboard</h1>
+              <p class="text-sm text-slate-600">Advanced insights for your AI sales performance</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <%# Date Range Selector %>
+          <div class="flex items-center space-x-2">
+            <label class="text-sm font-medium text-slate-700">Period:</label>
+            <%= form_with url: dashboard_analytics_path, method: :get, local: true, class: "flex items-center space-x-2" do |form| %>
+              <%= form.select :date_range, 
+                    options_for_select([
+                      ['Last 7 days', '7'],
+                      ['Last 30 days', '30'],
+                      ['Last 90 days', '90'],
+                      ['Last 6 months', '180'],
+                      ['Last year', '365']
+                    ], @date_range), 
+                    {}, 
+                    { class: "bg-white shadow-sm shadow-slate-200/50 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:shadow-md focus:shadow-indigo-200/50", onchange: "this.form.submit();" } %>
+            <% end %>
+          </div>
+          <%= link_to "← Back to Dashboard", dashboard_index_path, class: "bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg font-medium transition-colors" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Main Content %>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <%# Key Metrics Overview %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <%# Total Leads %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-600">Total Leads</p>
+            <p class="text-3xl font-bold text-slate-900"><%= number_with_delimiter(@analytics[:total_leads]) %></p>
+          </div>
+          <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center">
+          <div class="flex items-center text-sm">
+            <span class="text-green-600 font-medium">+<%= @analytics[:qualified_leads] %></span>
+            <span class="text-slate-600 ml-1">qualified</span>
+          </div>
+        </div>
+      </div>
+
+      <%# Conversion Rate %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-600">Conversion Rate</p>
+            <p class="text-3xl font-bold text-slate-900"><%= @analytics[:conversion_rate] %>%</p>
+          </div>
+          <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mt-3">
+          <div class="w-full bg-slate-200 rounded-full h-2">
+            <div class="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full" style="width: <%= [@analytics[:conversion_rate], 100].min %>%"></div>
+          </div>
+        </div>
+      </div>
+
+      <%# Avg Lead Score %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-600">Avg Lead Score</p>
+            <p class="text-3xl font-bold text-slate-900"><%= @analytics[:avg_lead_score] %></p>
+          </div>
+          <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center">
+          <div class="w-full bg-slate-200 rounded-full h-2">
+            <div class="bg-gradient-to-r from-orange-400 to-orange-600 h-2 rounded-full" style="width: <%= [@analytics[:avg_lead_score], 100].min %>%"></div>
+          </div>
+        </div>
+      </div>
+
+      <%# Total Conversations %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-600">Total Conversations</p>
+            <p class="text-3xl font-bold text-slate-900"><%= number_with_delimiter(@analytics[:total_conversations]) %></p>
+          </div>
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center text-sm">
+          <span class="text-slate-600">Avg duration:</span>
+          <span class="text-slate-900 font-medium ml-1"><%= @analytics[:avg_conversation_duration] %>m</span>
+        </div>
+      </div>
+    </div>
+
+    <%# Charts Grid %>
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
+      <%# Leads Over Time Chart %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-semibold text-slate-900">Leads Trend</h3>
+          <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+              <span class="text-sm text-slate-600">Leads Generated</span>
+            </div>
+          </div>
+        </div>
+        <div class="h-80 bg-slate-50 rounded-lg flex items-center justify-center">
+          <div class="text-center">
+            <svg class="w-16 h-16 text-slate-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
+              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
+            </svg>
+            <p class="text-slate-600 font-medium">Advanced Chart Component</p>
+            <p class="text-sm text-slate-500">Chart.js or D3.js integration needed</p>
+          </div>
+        </div>
+      </div>
+
+      <%# Conversion Funnel %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-semibold text-slate-900">Conversion Funnel</h3>
+          <div class="text-sm text-slate-600">Last <%= @date_range %> days</div>
+        </div>
+        <div class="space-y-4">
+          <% funnel_data = @charts_data[:conversion_funnel] %>
+          <% total_leads = funnel_data["Total Leads"] || 1 %>
+          
+          <% funnel_data.each_with_index do |(stage, count), index| %>
+            <% percentage = (count.to_f / total_leads * 100).round(1) %>
+            <% colors = ['bg-blue-500', 'bg-indigo-500', 'bg-purple-500', 'bg-green-500'] %>
+            <div class="relative">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-slate-900"><%= stage %></span>
+                <span class="text-sm text-slate-600"><%= count %> (<%= percentage %>%)</span>
+              </div>
+              <div class="w-full bg-slate-200 rounded-full h-3">
+                <div class="<%= colors[index % colors.length] %> h-3 rounded-full transition-all duration-500" style="width: <%= percentage %>%"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Sentiment Analysis %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-semibold text-slate-900">Conversation Sentiment</h3>
+          <div class="text-sm text-slate-600">Based on AI analysis</div>
+        </div>
+        <div class="space-y-4">
+          <% sentiment_data = @charts_data[:sentiment_distribution] %>
+          <% total_conversations = sentiment_data.values.sum %>
+          <% total_conversations = 1 if total_conversations == 0 %>
+          
+          <%# Positive Sentiment %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+              <span class="text-sm font-medium text-slate-900">Positive</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-24 bg-slate-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: <%= (sentiment_data["Positive"].to_f / total_conversations * 100).round(1) %>%"></div>
+              </div>
+              <span class="text-sm text-slate-600 w-12 text-right"><%= sentiment_data["Positive"] || 0 %></span>
+            </div>
+          </div>
+
+          <%# Neutral Sentiment %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-yellow-500 rounded-full"></div>
+              <span class="text-sm font-medium text-slate-900">Neutral</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-24 bg-slate-200 rounded-full h-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: <%= (sentiment_data["Neutral"].to_f / total_conversations * 100).round(1) %>%"></div>
+              </div>
+              <span class="text-sm text-slate-600 w-12 text-right"><%= sentiment_data["Neutral"] || 0 %></span>
+            </div>
+          </div>
+
+          <%# Negative Sentiment %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+              <span class="text-sm font-medium text-slate-900">Negative</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-24 bg-slate-200 rounded-full h-2">
+                <div class="bg-red-500 h-2 rounded-full" style="width: <%= (sentiment_data["Negative"].to_f / total_conversations * 100).round(1) %>%"></div>
+              </div>
+              <span class="text-sm text-slate-600 w-12 text-right"><%= sentiment_data["Negative"] || 0 %></span>
+            </div>
+          </div>
+        </div>
+
+        <%# Overall Sentiment Score %>
+        <div class="mt-6 pt-4 border-t border-slate-200">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-slate-900">Overall Sentiment Score</span>
+            <% 
+              positive = sentiment_data["Positive"] || 0
+              negative = sentiment_data["Negative"] || 0
+              overall_score = total_conversations > 0 ? ((positive - negative).to_f / total_conversations * 100).round(1) : 0
+              score_color = overall_score >= 0 ? 'text-green-600' : 'text-red-600'
+            %>
+            <span class="text-lg font-bold <%= score_color %>"><%= overall_score > 0 ? '+' : '' %><%= overall_score %></span>
+          </div>
+        </div>
+      </div>
+
+      <%# Lead Sources %>
+      <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50 p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-lg font-semibold text-slate-900">Lead Sources</h3>
+          <div class="text-sm text-slate-600">Traffic breakdown</div>
+        </div>
+        <div class="space-y-3">
+          <% source_data = @charts_data[:source_breakdown] %>
+          <% total_sources = source_data.values.sum %>
+          <% total_sources = 1 if total_sources == 0 %>
+          <% source_colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500', 'bg-red-500'] %>
+          
+          <% source_data.each_with_index do |(source, count), index| %>
+            <% percentage = (count.to_f / total_sources * 100).round(1) %>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 <%= source_colors[index % source_colors.length] %> rounded-full"></div>
+                <span class="text-sm font-medium text-slate-900"><%= source.humanize %></span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-20 bg-slate-200 rounded-full h-2">
+                  <div class="<%= source_colors[index % source_colors.length] %> h-2 rounded-full" style="width: <%= percentage %>%"></div>
+                </div>
+                <span class="text-sm text-slate-600 w-12 text-right"><%= count %></span>
+              </div>
+            </div>
+          <% end %>
+          
+          <% if source_data.empty? %>
+            <div class="text-center py-6">
+              <svg class="w-12 h-12 text-slate-400 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+              </svg>
+              <p class="text-sm text-slate-600">No source data available</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Assistant Performance Table %>
+    <div class="bg-white rounded-xl shadow-sm shadow-slate-200/50">
+      <div class="px-6 py-4 border-b border-slate-100">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-slate-900">Assistant Performance</h3>
+          <div class="text-sm text-slate-600">Detailed performance metrics</div>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-slate-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Assistant</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Leads Generated</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Qualified Leads</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Avg Lead Score</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Conversations</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Avg Duration</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Performance</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-slate-200">
+            <% if @analytics[:assistant_performance].any? %>
+              <% @analytics[:assistant_performance].each do |assistant| %>
+                <tr class="hover:bg-slate-50">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-white">
+                          <%= assistant[:name].first.upcase %>
+                        </span>
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-slate-900"><%= assistant[:name] %></div>
+                        <div class="text-sm text-slate-500">AI Assistant</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                    <span class="font-medium"><%= assistant[:leads_generated] %></span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                    <div class="flex items-center">
+                      <span class="font-medium"><%= assistant[:qualified_leads] %></span>
+                      <% if assistant[:leads_generated] > 0 %>
+                        <span class="ml-2 text-xs text-slate-500">
+                          (<%= ((assistant[:qualified_leads].to_f / assistant[:leads_generated]) * 100).round(1) %>%)
+                        </span>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                    <div class="flex items-center">
+                      <span class="font-medium"><%= assistant[:avg_lead_score] %></span>
+                      <div class="ml-2 w-16 bg-slate-200 rounded-full h-2">
+                        <div class="bg-gradient-to-r from-red-400 to-green-400 h-2 rounded-full" style="width: <%= [assistant[:avg_lead_score], 100].min %>%"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                    <span class="font-medium"><%= assistant[:total_conversations] %></span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                    <span class="font-medium"><%= assistant[:avg_conversation_duration] %>m</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <% 
+                      # Calculate performance score based on qualified leads ratio and avg score
+                      performance_score = if assistant[:leads_generated] > 0
+                        ((assistant[:qualified_leads].to_f / assistant[:leads_generated]) * 50) + (assistant[:avg_lead_score] * 0.5)
+                      else
+                        0
+                      end
+                      
+                      performance_color = case performance_score
+                                         when 80..100 then 'bg-green-100 text-green-800'
+                                         when 60..79 then 'bg-yellow-100 text-yellow-800'
+                                         when 40..59 then 'bg-orange-100 text-orange-800'
+                                         else 'bg-red-100 text-red-800'
+                                         end
+                      
+                      performance_label = case performance_score
+                                         when 80..100 then 'Excellent'
+                                         when 60..79 then 'Good'
+                                         when 40..59 then 'Average'
+                                         else 'Needs Improvement'
+                                         end
+                    %>
+                    <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full <%= performance_color %>">
+                      <%= performance_label %>
+                    </span>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="7" class="px-6 py-8 text-center">
+                  <div class="text-slate-400">
+                    <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <p class="text-sm">No assistant performance data available</p>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
