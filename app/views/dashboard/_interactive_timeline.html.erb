@@ -1,0 +1,201 @@
+<div class="interactive-timeline-container bg-white rounded-lg shadow-lg p-6 mb-6"
+     data-controller="timeline-visualization"
+     data-timeline-visualization-deal-room-id-value="<%= deal_room.id %>"
+     data-timeline-visualization-height-value="600"
+     data-timeline-visualization-width-value="1000">
+  
+  <!-- Timeline Header -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800">Deal Timeline</h2>
+      <p class="text-gray-600">Interactive visualization of deal progression and activities</p>
+    </div>
+    
+    <div class="flex space-x-2">
+      <button class="btn btn-sm btn-outline" data-action="click->timeline-visualization#exportTimeline">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        Export
+      </button>
+      
+      <button class="btn btn-sm btn-outline" data-action="click->timeline-visualization#toggleFullscreen">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+        </svg>
+        Fullscreen
+      </button>
+    </div>
+  </div>
+
+  <!-- Timeline Metrics -->
+  <div data-timeline-visualization-target="metrics" class="mb-6">
+    <!-- Metrics will be populated by JavaScript -->
+  </div>
+
+  <!-- Timeline Filters -->
+  <div data-timeline-visualization-target="filters" class="mb-6">
+    <!-- Filters will be populated by JavaScript -->
+  </div>
+
+  <!-- Main Timeline Visualization -->
+  <div class="timeline-wrapper border rounded-lg bg-gray-50 p-4 mb-6">
+    <div data-timeline-visualization-target="container" class="timeline-container">
+      <!-- D3.js timeline will be rendered here -->
+    </div>
+  </div>
+
+  <!-- Timeline Legend -->
+  <div class="timeline-legend mb-6">
+    <h3 class="text-lg font-semibold mb-3">Legend</h3>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex items-center space-x-2">
+        <div class="w-4 h-4 rounded-full bg-blue-500"></div>
+        <span class="text-sm text-gray-700">Conversations</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-4 h-4 rounded-full bg-green-500"></div>
+        <span class="text-sm text-gray-700">Milestones</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+        <span class="text-sm text-gray-700">Activities</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-4 h-4 rounded-full bg-red-500"></div>
+        <span class="text-sm text-gray-700">Critical Events</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Details Panel -->
+  <div data-timeline-visualization-target="details" class="event-details-panel">
+    <!-- Event details will be shown here when clicking on timeline events -->
+  </div>
+
+  <!-- Timeline Controls -->
+  <div class="timeline-controls flex justify-between items-center pt-4 border-t">
+    <div class="flex space-x-2">
+      <button class="btn btn-sm btn-outline" data-action="click->timeline-visualization#zoomIn">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+        </svg>
+        Zoom In
+      </button>
+      
+      <button class="btn btn-sm btn-outline" data-action="click->timeline-visualization#zoomOut">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path>
+        </svg>
+        Zoom Out
+      </button>
+      
+      <button class="btn btn-sm btn-outline" data-action="click->timeline-visualization#resetZoom">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Reset
+      </button>
+    </div>
+    
+    <div class="text-sm text-gray-500">
+      Click on events for details • Hover for quick info • Use filters to focus
+    </div>
+  </div>
+</div>
+
+<!-- Custom Styles for Timeline -->
+<style>
+  .timeline-svg {
+    background: white;
+    border-radius: 8px;
+  }
+  
+  .timeline-tooltip {
+    max-width: 250px;
+    word-wrap: break-word;
+  }
+  
+  .event-circle {
+    transition: all 0.2s ease;
+  }
+  
+  .event-circle:hover {
+    transform: scale(1.2);
+    filter: brightness(1.1);
+  }
+  
+  .timeline-line {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+  
+  .milestone-marker circle {
+    transition: all 0.2s ease;
+  }
+  
+  .milestone-marker:hover circle {
+    transform: scale(1.1);
+  }
+  
+  .timeline-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  .event-details-panel {
+    min-height: 100px;
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-controls {
+    background: rgba(249, 250, 251, 0.8);
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .timeline-wrapper {
+      overflow-x: auto;
+    }
+    
+    .timeline-controls {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .timeline-legend {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Animation for timeline loading */
+  .timeline-container {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Custom scrollbar for timeline container */
+  .timeline-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .timeline-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .timeline-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+  
+  .timeline-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+</style>

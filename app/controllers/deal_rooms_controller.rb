@@ -7,10 +7,13 @@ class DealRoomsController < ApplicationController
   end
 
   def show
+    timeline_service = TimelineVisualizationService.new(@deal_room)
+    
     render json: {
       deal_room: @deal_room,
       ai_summary: @deal_room.generate_ai_summary,
-      timeline: @deal_room.timeline_events
+      timeline: @deal_room.timeline_events,
+      timeline_visualization: timeline_service.generate_timeline_data
     }
   end
 
